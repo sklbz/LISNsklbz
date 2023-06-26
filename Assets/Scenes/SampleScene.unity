@@ -1118,6 +1118,10 @@ PrefabInstance:
       value: Boat (2)
       objectReference: {fileID: 0}
     - target: {fileID: 5663656203583795543, guid: a797594e2dd011942b661c44630790be, type: 3}
+      propertyPath: _state
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5663656203583795543, guid: a797594e2dd011942b661c44630790be, type: 3}
       propertyPath: teamNumber
       value: 3
       objectReference: {fileID: 0}
@@ -1197,6 +1201,10 @@ PrefabInstance:
     - target: {fileID: 2044081079335937463, guid: a797594e2dd011942b661c44630790be, type: 3}
       propertyPath: m_Name
       value: Boat
+      objectReference: {fileID: 0}
+    - target: {fileID: 5663656203583795543, guid: a797594e2dd011942b661c44630790be, type: 3}
+      propertyPath: _state
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5663656203583795543, guid: a797594e2dd011942b661c44630790be, type: 3}
       propertyPath: keyNumber

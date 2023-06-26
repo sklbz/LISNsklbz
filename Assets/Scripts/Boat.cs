@@ -4,13 +4,17 @@ using UnityEngine;
 public class Boat : MonoBehaviour {
 
     [SerializeField]
-    float speed = 3.0f, firingRate = 1, time;
-    [SerializeField]
     int teamNumber;
     [SerializeField]
     GameObject Bullet;
     [SerializeField]
     State _state = State.STATE_MOVING;
+    float speed = 3.0f, firingRate = 2, time;
+    Vector3 StartingPosition;
+
+    void Start () {
+        StartingPosition = transform.position;
+    }
 
     void Update() {
         switch (_state)
@@ -34,7 +38,6 @@ public class Boat : MonoBehaviour {
             case State.STATE_SHOOTING:
                 int axis = (int)Input.GetAxis("Horizontal");
                 time += Time.deltaTime;
-                Debug.Log(time);
                 if (Math.Abs(axis) == 1 && time >= 1 / firingRate)
                 {
                     Instantiate(Bullet, new Vector3(transform.position.x + axis, transform.position.y, transform.position.z), Quaternion.Euler(0, 0, axis == 1 ? 180 : 0));
@@ -60,9 +63,9 @@ public class Boat : MonoBehaviour {
 
                 break;
             case ("Bullet"):
-                
-                break;
+                transform.position = StartingPosition;
 
+                break;
         }
     }
 
