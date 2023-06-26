@@ -4,7 +4,7 @@ using UnityEngine;
 public class Boat : MonoBehaviour {
 
     [SerializeField]
-    float speed = 3.0f;
+    float speed = 3.0f, firingRate = 1, time;
     [SerializeField]
     int teamNumber;
     [SerializeField]
@@ -33,10 +33,14 @@ public class Boat : MonoBehaviour {
             // handle attacking state
             case State.STATE_SHOOTING:
                 int axis = (int)Input.GetAxis("Horizontal");
-                if (Math.Abs(axis) == 1)
+                time += Time.deltaTime;
+                Debug.Log(time);
+                if (Math.Abs(axis) == 1 && time >= 1 / firingRate)
                 {
                     Instantiate(Bullet, new Vector3(transform.position.x + axis, transform.position.y, transform.position.z), Quaternion.Euler(0, 0, axis == 1 ? 180 : 0));
                     // (axis == 1 ? 180 : 0) <=> (axis * 90 + 90) because -1 * 90 + 90 = 0 and 1 * 90 + 90 = 180;
+
+                    time = 0;
                 }
 
                 break;
