@@ -1,5 +1,5 @@
 enum State {
     STATE_MOVING,
     STATE_SHOOTING,
-    STATE_DEFENDING
+    STATE_RESPAWNING
 };

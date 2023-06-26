@@ -48,8 +48,14 @@ public class Boat : MonoBehaviour {
 
                 break;
 
-            // handle defending state
-            case State.STATE_DEFENDING:
+            case State.STATE_RESPAWNING:
+                time += Time.deltaTime;
+                if (time >= 1.5f)
+                {
+                    time = 0;
+                    transform.position = StartingPosition;
+                    _state = State.STATE_MOVING;
+                }
 
                 break;
         }
@@ -63,21 +69,21 @@ public class Boat : MonoBehaviour {
 
                 break;
             case ("Bullet"):
-                transform.position = StartingPosition;
+                Respawn();
 
                 break;
         }
     }
 
-    public void SettStateMove() {
+    public void SetStateMove() {
         _state = State.STATE_MOVING;
     }
 
-    public void SettStateAttack() {
+    public void SetStateAttack() {
         _state = State.STATE_SHOOTING;
     }
 
-    public void SettStateDefend() {
-        _state = State.STATE_DEFENDING;
+    void Respawn() {
+        _state = State.STATE_RESPAWNING;
     }
 }
