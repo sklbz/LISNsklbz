@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Boat : MonoBehaviour {
@@ -35,7 +33,7 @@ public class Boat : MonoBehaviour {
             // handle attacking state
             case State.STATE_SHOOTING:
                 int axis = (int)Input.GetAxis("Horizontal");
-                if (Math.Abs(axis) == 1) 
+                if (Math.Abs(axis) == 1)
                 {
                     Instantiate(Bullet, new Vector3(transform.position.x + axis, transform.position.y, transform.position.z), Quaternion.Euler(0, 0, axis == 1 ? 180 : 0));
                     // (axis == 1 ? 180 : 0) <=> (axis * 90 + 90) because -1 * 90 + 90 = 0 and 1 * 90 + 90 = 180;
@@ -50,11 +48,17 @@ public class Boat : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Finish"))
-        {
-            Debug.Log($"Team {teamNumber} won!");
+    private void OnCollisionEnter2D(Collision2D collision) {
+        string tag = collision.gameObject.tag;
+        switch (tag) {
+            case ("Finish"):
+                Debug.Log($"Team {teamNumber} won!");
+
+                break;
+            case ("Bullet"):
+                
+                break;
+
         }
     }
 
