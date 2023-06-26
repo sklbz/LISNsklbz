@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
     readonly float speed = 5.0f;
     Vector3 _velocity = Vector3.left;
+    float time = 0f;
 
     void Update()
     {
@@ -14,6 +15,8 @@ public class Bullet : MonoBehaviour
         _velocity.x *= speed * Time.deltaTime;
 
         transform.Translate(_velocity);
+
+        TimeOut();
     }
 
     [SerializeField]
@@ -22,5 +25,11 @@ public class Bullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void TimeOut() {
+        time += Time.deltaTime;
+        if (time > 7.5f) 
+            Destroy(gameObject);
     }
 }

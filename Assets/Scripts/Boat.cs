@@ -8,15 +8,23 @@ public class Boat : MonoBehaviour {
     [SerializeField]
     GameObject Bullet;
     [SerializeField]
-    State _state = State.STATE_MOVING;
+    State _state = State.STATE_MOVING, _previousState;
     float speed = 3.0f, firingRate = 2, time;
     Vector3 StartingPosition;
+    [SerializeField]
+    PlayerManager playerManager;
 
     void Start () {
         StartingPosition = transform.position;
+        playerManager = FindObjectOfType<PlayerManager>();
     }
 
     void Update() {
+        FindPlayerManager();
+
+        if (playerManager.team != teamNumber)
+            return;
+
         switch (_state)
         {
             // handle moving state
@@ -50,24 +58,25 @@ public class Boat : MonoBehaviour {
 
             case State.STATE_RESPAWNING:
                 time += Time.deltaTime;
-                if (time >= 1.5f)
+                if (time >= .5f)
                 {
                     time = 0;
                     transform.position = StartingPosition;
-                    _state = State.STATE_MOVING;
+                    _state = _previousState;
                 }
 
                 break;
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
+    void OnCollisionEnter2D(Collision2D collision) {
         string tag = collision.gameObject.tag;
         switch (tag) {
             case ("Finish"):
                 Debug.Log($"Team {teamNumber} won!");
 
                 break;
+
             case ("Bullet"):
                 Respawn();
 
@@ -84,6 +93,14 @@ public class Boat : MonoBehaviour {
     }
 
     void Respawn() {
+        _previousState = _state;
         _state = State.STATE_RESPAWNING;
+    }
+
+    void FindPlayerManager() {
+        if (playerManager == null)
+        {
+            playerManager = FindObjectOfType<PlayerManager>();
+        }
     }
 }
