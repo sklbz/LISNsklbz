@@ -1,8 +1,10 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Boat : MonoBehaviour {
 
+    public Text acc, spd, pos;
     [SerializeField]
     int teamNumber;
     [SerializeField]
@@ -12,7 +14,7 @@ public class Boat : MonoBehaviour {
     float speed = 3.0f, firingRate = 2, time;
     Vector3 StartingPosition;
     [SerializeField]
-    PlayerManager playerManager;
+    PlayerManager playerManager = null;
 
     void Start () {
         StartingPosition = transform.position;
@@ -22,7 +24,7 @@ public class Boat : MonoBehaviour {
     void Update() {
         FindPlayerManager();
 
-        if (playerManager.team != teamNumber)
+        if (playerManager != null && playerManager.team != teamNumber)
             return;
 
         switch (_state)
@@ -67,6 +69,12 @@ public class Boat : MonoBehaviour {
 
                 break;
         }
+
+        Vector3 input = Input.acceleration;
+
+        acc.text = input.ToString();
+        spd.text = (Time.deltaTime * input).ToString();
+        pos.text = (Time.deltaTime * Time.deltaTime * input).ToString();
     }
 
     void OnCollisionEnter2D(Collision2D collision) {

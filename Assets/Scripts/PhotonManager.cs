@@ -1,17 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.XR;
 using UnityEngine;
 
 public class PhotonManager : MonoBehaviour
 {
     string roomName = "main";
-    RoomOptions roomOptions = new RoomOptions();
+    [SerializeField]
+    GameObject PlayerManagerPrefab;
 
-    void OnJoinedLobby()
-    {
+    void Start() {
+        PhotonNetwork.ConnectUsingSettings("game");
+    }
+
+    void Update() {
+        Debug.Log(PhotonNetwork.connectionStateDetailed);
+    }
+
+    void OnConnectedToServer() {
+        PhotonNetwork.JoinLobby();
+    }
+
+    void OnJoinedLobby() {
+        RoomOptions roomOptions = new RoomOptions();
         PhotonNetwork.playerName = PhotonNetwork.countOfPlayers.ToString();
         roomOptions.MaxPlayers = 20;
         PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
+        Debug.Log("lobby joined");
+    }
+
+    void OnJoinedRoom() {
+        Debug.Log("joined the room");
+        PhotonNetwork.Instantiate(PlayerManagerPrefab.name, Vector3.zero, Quaternion.identity, 0);
     }
 }

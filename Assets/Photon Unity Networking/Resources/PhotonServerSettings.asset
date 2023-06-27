@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AppID: 32bd9992-0893-462a-a5a1-1cedebd90616
   VoiceAppID: 
-  ChatAppID: 
+  ChatAppID: 32bd9992-0893-462a-a5a1-1cedebd90616
   HostType: 1
   PreferredRegion: 0
   EnabledRegions: -1
@@ -24,7 +24,7 @@ MonoBehaviour:
   VoiceServerPort: 5055
   JoinLobby: 1
   EnableLobbyStatistics: 0
-  PunLogging: 0
+  PunLogging: 2
   NetworkLogging: 1
   RunInBackground: 1
   RpcList:
