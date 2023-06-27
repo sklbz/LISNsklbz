@@ -7,6 +7,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     GameManager gm;
     public int team;
+    public int player;
 
     void Start()
     {
@@ -24,6 +25,8 @@ public class PlayerManager : MonoBehaviour
         }
 
         gm.TeamPlayers[team] += 1;
+
+        player = gm.TeamPlayers[team];
 
         team++;
     }

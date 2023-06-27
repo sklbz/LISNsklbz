@@ -147,6 +147,8 @@ MonoBehaviour:
   teamNumber: 0
   Bullet: {fileID: 6486323063415746211, guid: 2ac8d764805960d4b96b98a1c1d863d5, type: 3}
   _state: 0
+  _previousState: 0
+  playerManager: {fileID: 0}
 --- !u!50 &-998589323922492035
 Rigidbody2D:
   serializedVersion: 4

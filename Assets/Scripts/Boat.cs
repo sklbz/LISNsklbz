@@ -4,43 +4,60 @@ using UnityEngine.UI;
 
 public class Boat : MonoBehaviour {
 
-    public Text acc, spd, pos;
     [SerializeField]
     int teamNumber;
     [SerializeField]
     GameObject Bullet;
     [SerializeField]
     State _state = State.STATE_MOVING, _previousState;
-    float speed = 3.0f, firingRate = 2, time;
+    float nominalSpeed = 3.0f, firingRate = 2, time, _speed;
     Vector3 StartingPosition;
     [SerializeField]
     PlayerManager playerManager = null;
+    GameManager gm;
 
     void Start () {
         StartingPosition = transform.position;
         playerManager = FindObjectOfType<PlayerManager>();
+        gm = FindObjectOfType<GameManager>();
     }
 
     void Update() {
         FindPlayerManager();
 
-        if (playerManager != null && playerManager.team != teamNumber)
-            return;
+        /*if (playerManager == null || playerManager.team != teamNumber)
+            return;*/
 
         switch (_state)
         {
             // handle moving state
             case State.STATE_MOVING:
-                Vector3 _velocity = Vector3.zero;
+                _speed = nominalSpeed / gm.TeamPlayers[teamNumber];
+                
+                Vector3 _velocity = Input.acceleration;
 
-                _velocity.y = Math.Abs(Input.acceleration.y);
-
-                if (_velocity.sqrMagnitude > 1)
+                /*if (_velocity.sqrMagnitude > 1)
                 {
                     _velocity.Normalize();
+                }*/
+
+                float highestVelocity = _velocity.x;
+
+                if (_velocity.y > highestVelocity)
+                {
+                    highestVelocity = _velocity.y;
+                }
+                    
+                if (_velocity.z > highestVelocity)
+                {
+                    highestVelocity = _velocity.z;
                 }
 
-                transform.Translate(speed * Time.deltaTime * _velocity);
+                _velocity = Vector3.zero;
+
+                _velocity.y = highestVelocity;
+
+                transform.Translate(_speed * Time.deltaTime * Vector3.down);
 
                 break;
 
@@ -72,9 +89,7 @@ public class Boat : MonoBehaviour {
 
         Vector3 input = Input.acceleration;
 
-        acc.text = input.ToString();
-        spd.text = (Time.deltaTime * input).ToString();
-        pos.text = (Time.deltaTime * Time.deltaTime * input).ToString();
+        //Debug.Log($"accel:{input}\nspeed:{Time.deltaTime * input}\npos:{Time.deltaTime * Time.deltaTime * input}");
     }
 
     void OnCollisionEnter2D(Collision2D collision) {

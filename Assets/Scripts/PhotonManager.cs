@@ -12,10 +12,6 @@ public class PhotonManager : MonoBehaviour
         PhotonNetwork.ConnectUsingSettings("game");
     }
 
-    void Update() {
-        Debug.Log(PhotonNetwork.connectionStateDetailed);
-    }
-
     void OnConnectedToServer() {
         PhotonNetwork.JoinLobby();
     }
