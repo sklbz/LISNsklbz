@@ -9,6 +9,7 @@ public class PhotonManager : MonoBehaviour
     GameObject PlayerManagerPrefab;
 
     void Start() {
+        PhotonNetwork.automaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings("game");
     }
 

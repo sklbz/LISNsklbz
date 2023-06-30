@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Boat : MonoBehaviour {
 
@@ -25,8 +24,8 @@ public class Boat : MonoBehaviour {
     void Update() {
         FindPlayerManager();
 
-        /*if (playerManager == null || playerManager.team != teamNumber)
-            return;*/
+        if (playerManager == null || playerManager.team != teamNumber)
+            return;
 
         switch (_state)
         {
@@ -57,7 +56,7 @@ public class Boat : MonoBehaviour {
 
                 _velocity.y = highestVelocity;
 
-                transform.Translate(_speed * Time.deltaTime * Vector3.down);
+                transform.Translate(_speed * Time.deltaTime * _velocity);
 
                 break;
 
@@ -105,6 +104,7 @@ public class Boat : MonoBehaviour {
 
                 break;
         }
+        PhotonNetwork.LoadLevel($"Team{teamNumber}");
     }
 
     public void SetStateMove() {
@@ -121,7 +121,7 @@ public class Boat : MonoBehaviour {
     }
 
     void FindPlayerManager() {
-        if (playerManager == null)
+        if (playerManager == null || playerManager.team != teamNumber)
         {
             playerManager = FindObjectOfType<PlayerManager>();
         }
